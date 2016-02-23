@@ -476,7 +476,11 @@
 
     BootstrapTableFilter.prototype.disableFilter = function(field) {
         var filter = this.getFilter(field);
-        this.$buttonList.find('[data-filter-field=' + field + '] input[type=checkbox]').prop('checked', false);
+        var fieldWithSlashes = field;
+        if (/\s/.test(field)) { // if field string contains a space character
+            fieldWithSlashes = field.replace(/ /g,"\\ ");
+        }
+        this.$buttonList.find('[data-filter-field=' + fieldWithSlashes + '] input[type=checkbox]').prop('checked', false);
         filter.enabled = false;
         if (filter.$dropdown) {
             filter.$dropdown.remove();
